@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6vh5c%2w%eq)#a5c7p#41auu-nt4#$5dds93gbeg)vg8)z+3pj'
+SECRET_KEY = '6vh5c%2w%eq)#a5c7p#41auu-nt4#$5dds93gbeg)vg8)z+3pj'   #   ToDo Hide sensitive data from source code
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,7 +125,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = "rest_auth.HypertubeUser"
+AUTH_USER_MODEL = 'rest_auth.CustomUser'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'somerussianlad@gmail.com'    #   ToDo Hide sensitive data from source code
+EMAIL_HOST_PASSWORD = 'bsrydegxwaadkfax'        #   ToDo Hide sensitive data from source code
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -136,5 +143,9 @@ REST_FRAMEWORK = {
     ]
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = ['http://vo-c2.21-school.ru:8080']
+DJOSER = {
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'http://vo-c1.21-school.ru:8080/activate/{uid}/{token}'
+}
+
+CORS_ORIGIN_WHITELIST = ['http://vo-c1.21-school.ru:8080']
