@@ -35,10 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authorization',
     'rest_framework',
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'djoser',
     'corsheaders'
 ]
 
@@ -121,9 +123,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'somerussianlad@gmail.com'    #   ToDo Hide sensitive data from source code
+EMAIL_HOST_PASSWORD = 'bsrydegxwaadkfax'        #   ToDo Hide sensitive data from source code
+
 # CORS headers
 
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = ['http://vo-c1.21-school.ru:8080']
 
 # REST framework
 
@@ -133,6 +145,15 @@ REST_FRAMEWORK = {
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
 }
+
+# Authorization
+
+DJOSER = {
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': 'activate/{uid}/{token}'
+}
+
+AUTH_USER_MODEL = 'authorization.HypertubeUser'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
